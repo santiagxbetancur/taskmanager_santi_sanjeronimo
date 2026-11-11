@@ -21,7 +21,19 @@ export function showRegisterView(container, presenter) {
 
                 <form id="register-form" class="auth-form">
 
-                    <div class="form-group">
+                    
+                    <label for="institucion">elige tu institucion:</label>
+                  
+                      
+                    <select id="institucion" name="institucion" class = auth-form>
+                      
+                      <option value = "elige tu institucion"> Elige tu institucion</option>
+                      <option value = "I.E San jeronimo"> I.E San Jeronimo</option>
+                       <option value = "I.E San Lorenzo"> I.E San Lorenzo</option>
+                       <option value = "I.E San Jose" > I.E San Jose</option>
+                    </select>
+                
+                <div class="form-group">
                         <label for="register-name">
                             Nombre
                         </label>
@@ -34,7 +46,33 @@ export function showRegisterView(container, presenter) {
                             required
                         >
                     </div>
+                         
+                     
+                   
 
+                    <label for="tipodeusuario">elige un tipo de usuario:</label>
+
+                      <select id="tipodeusuario" name="tipodeusuario">
+                      
+                      <option value = "elige tu tipo de usuario"> elige tu tipo de usuario</option>
+                      <option value = "profesor"> profesor</option>
+                       <option value = "Estudiante"> Estudiante</option>
+                       <option value = "trabajador"> trabajador</option>
+                       
+                       </select>
+                     
+                    
+                  <label for="genero"> 
+                  elige tu genero:</label>
+
+                      <select id="genero" name="genero">
+                      
+                      <option value = "Elige tu genero"> Elige tu genero</option>
+                      <option value = "Masculino"> Masculino</option>
+                       <option value = "Femenino"> Femenino</option>
+                       </select>
+                
+                   
                     <div class="form-group">
                         <label for="register-email">
                             Correo electrónico
@@ -62,6 +100,19 @@ export function showRegisterView(container, presenter) {
                             required
                         >
                     </div>
+
+                <div class = "form-group">
+                    <label for = "register-activo"> 
+                      <input 
+                       type = "checkbox"
+                       id = "register-activo"
+                       name: "activo"
+                       value ="activo"
+                       checked
+                       >
+                      activo
+                    </label>
+                </div>  
 
                     <button
                         type="submit"
@@ -104,11 +155,16 @@ export function showRegisterView(container, presenter) {
         const formData = new FormData(registerForm);
 
         const userData = {
+            activo : formData.get("activo"),
+            institucion: formData.get("institucion"),
             name: formData.get("name"),
+            tipodeusuario: formData.get("tipodeusuario"),
+            genero: formData.get("genero"),
             email: formData.get("email"),
             password: formData.get("password")
+            
         };
-
+debugger;
         presenter.register(userData);
     });
 

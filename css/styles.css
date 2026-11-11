@@ -170,6 +170,7 @@ body {
     gap: 7px;
 }
 
+
 .form-group label {
     font-weight: 600;
 
@@ -193,6 +194,8 @@ body {
 .form-group input:focus {
     border-color: var(--color-primary);
 }
+
+
 
 
 /*

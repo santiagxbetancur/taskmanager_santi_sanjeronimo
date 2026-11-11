@@ -29,10 +29,13 @@ debugger;
         debugger;
 
         const userData = new User({
+            institucion: user.institucion,
+            tipodeusuario: user.tipodeusuario,
             name: user.name,
+            genero: user.genero,
             email: user.email,
-            passwordHash: passwordData
-       
+            passwordHash: passwordData,
+            activo: user.activo
         });
 
         
