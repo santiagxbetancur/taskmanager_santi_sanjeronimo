@@ -106,7 +106,7 @@ export function showRegisterView(container, presenter) {
                       <input 
                        type = "checkbox"
                        id = "register-activo"
-                       name: "activo"
+                       name = "activo"
                        value ="activo"
                        checked
                        >
@@ -116,7 +116,7 @@ export function showRegisterView(container, presenter) {
 
                     <button
                         type="submit"
-                        class="button button-primary"
+                        class="btn btn-success"
                     >
                         Crear cuenta
                     </button>
@@ -137,13 +137,41 @@ export function showRegisterView(container, presenter) {
 
                 </div>
 
-                <p
-                    id="register-message"
-                    class="form-message"
-                ></p>
+                    <p
+                        id="register-message"
+                        class="form-message"
+                    ></p>
 
-            </div>
-        </section>
+              
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">registro de usuarios</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p><strong> institucion </strong> <spam id= "confimIE"></spam></p>
+             <p><strong> name </strong> <spam id = "confimname"></spam></p>
+              <p><strong> tipodeusuario </strong> <spam id = "confimTDU"></spam></p>
+               <p><strong> genero </strong> <spam id = "confimgenero"></spam></p>
+                <p><strong> email </strong> <spam id = "confimemail"></spam></p>
+                 <p><strong> password </strong> <spam id = "confimpassword"></spam></p>
+                  <p><strong> activo </strong> <spam id = "confimactivo"></spam></p>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" id = "btn-confirmar"  class="btn btn-primary">confirmar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+       
+       
+       </section>
     `;
 
     const registerForm =
@@ -153,21 +181,40 @@ export function showRegisterView(container, presenter) {
         event.preventDefault();
 
         const formData = new FormData(registerForm);
-
+        const modalElement = document.getElementById("staticBackdrop");
+        const modal = new bootstrap.Modal(modalElement);
         const userData = {
-            activo : formData.get("activo"),
+            
             institucion: formData.get("institucion"),
             name: formData.get("name"),
             tipodeusuario: formData.get("tipodeusuario"),
             genero: formData.get("genero"),
             email: formData.get("email"),
-            password: formData.get("password")
-            
+            password: formData.get("password"),
+            activo : formData.get("activo")
         };
-debugger;
-        presenter.register(userData);
-    });
+         document.getElementById("confimIE").textContent = userData.institucion;
+         document.getElementById("confimname").textContent = userData.name;
+         document.getElementById("confimTDU").textContent = userData.tipodeusuario;
+         document.getElementById("confimgenero").textContent = userData.genero;
+         document.getElementById("confimemail").textContent = userData.email;
+         document.getElementById("confimpassword").textContent = "*******";
+         document.getElementById("confimactivo").textContent = userData.activo;
+          
+         registerForm.dataset.userData= JSON.stringify(userData);
+        modal.show(); 
+        
+         //presenter.register(userData);
 
+    });
+document.getElementById("btn-confirmar").addEventListener("click", () => {
+const userData = JSON.parse(registerForm.dataset.userData);
+presenter.register(userData);
+const modalId = document.getElementById("staticBackdrop");
+const modal = bootstrap.Modal.getOrCreateInstance(modalId);
+modal.hide();
+});
+    
     const loginButton =
         document.getElementById("show-login");
 
@@ -176,11 +223,12 @@ debugger;
     });
 }
 
-export function showRegisterMessage(message) {
-    const messageElement =
-        document.getElementById("register-message");
-
-    if (messageElement) {
-        messageElement.textContent = message;
-    }
+export function showRegisterMessage(message, alert = "success") {
+  const messageElement = document.getElementById("register-message");
+  if (messageElement) {
+    messageElement.innerHTML = `
+      <div class="alert alert-${alert}" role="alert">
+        ${message}
+      </div>`;
+  }
 }
